@@ -5,7 +5,7 @@ import "../public/preset.css"
 
 //========== COMPONENTS ==========//
 import AppointmentList from './components/Appoitments/AppoitmentList/AppoitmentList';
-
+import AppoitmentState from './components/Appoitments/AppoitmentState/AppointmentState';
 
 function App() {
 
@@ -13,6 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/turnos' element={<AppointmentList/>}/>
+        <Route path='/turnos/estado/:id' element={<AppoitmentState/>}/>
       </Routes>
     </Router>
 
