@@ -1,0 +1,104 @@
+.appointment__state--status{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    padding: 20px;
+
+}
+
+.appointment__state--status--box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.appointment__state--status--box svg{
+    margin-bottom: 20px;
+}
+
+.appointment__state--status--box span{
+    font-size: 11px;
+    text-align: center;
+    background-color: gray;
+    color: white;
+    border-radius: 15px;
+    padding: 5px;
+    border-style: solid;
+    border-color: gray;
+    border-width: 1px;
+}
+
+.appointment__state--card{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    align-items: center;
+    justify-items: center;
+    margin-top: 50px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    padding: 10px;
+    height: 100px
+}
+
+.appointment__state--card img{
+    width: 100px;
+    height: 100px;
+}
+
+.appointment__state--card--info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.appoitments__state--card--info--data{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    max-height: 35px;
+
+}
+
+.appointment__state--card--info--data p{
+    margin-left: 10px !important;
+}
+
+.appointment__state--card div p, .appointment__state--card div h4 {
+    margin: 0px;
+}
+
+.appointment__state--buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.appointment__state--btn {
+    border-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    background-color: gray;
+    color: white;
+    min-width: 300px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.appointment__state--btn--small{
+    border-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    background-color: gray;
+    color: white;
+    max-width: 250px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
