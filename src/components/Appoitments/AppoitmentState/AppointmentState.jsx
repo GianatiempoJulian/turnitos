@@ -1,14 +1,22 @@
+// ======== Partials ========//
 import Logo from "../../Partials/Logo/Logo";
 import "./appointmentState.css";
+
+// ======== Importaciones de React ========//
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
+// ======== Librerias ========//
 import axios from "axios";
+import Countdown from 'react-countdown';
+
 
 const AppointmentState = () => {
   const [appointment, setAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
+  // ======== Setea el turno llamando a la función. ========//
   useEffect(() => {
     getAppointmentById();
   }, [id]);
@@ -17,13 +25,14 @@ const AppointmentState = () => {
     return <div>Loading...</div>;
   }
 
+  // ======== Obtiene un turno mediante una ID. ========//
   async function getAppointmentById() {
     try {
       const response = await axios.get(
         `http://127.0.0.1:8000/api/appointments/${id}`
       );
       setAppointment(response.data.Appointment);
-      console.log(response.data.Appointment);
+      handleAppointmentStatus(response.data.Appointment.status_id)
     } catch (error) {
       console.log("Error obteniendo turno", error);
     } finally {
@@ -31,13 +40,48 @@ const AppointmentState = () => {
     }
   }
 
+ // ======== Funcion que maneja los estados para cambiar el estilo de la status-boxes ========//
+  function handleAppointmentStatus(status){
+    switch(status){
+      case 2:
+        document.getElementById("temporary").classList.add("statusStep");
+        break;
+      case 3:
+        document.getElementById("payment").classList.add("statusStep");
+        break;
+      case 4:
+        document.getElementById("processing").classList.add("statusStep");
+        break;
+      case 5:
+        document.getElementById("complete").classList.add("statusStep");
+        break;
+      default:
+        console.log("Error obteniendo estado del turno.");
+    }
+  }
+
+  // ======== Funcion que maneja el cancelamiento del pago ========//
+  function handleCancel(){
+    window.location.href = 'http://localhost:5173/turnos';
+  }
+
+  // ======== Date en formato normal ========//
+  const date = new Date(appointment.date).toLocaleDateString('en-GB');
+
+
   return (
     <>
       <div>
         <Logo />
         <h3>Estado de la reserva</h3>
+        <div className="appointment__state--timer">
+           <p>Tiempo restante para pagar:</p>
+          <Countdown date={Date.now() + 20000} className="appointment__state--timer--countdown">
+            <p>Listo</p>
+          </Countdown>
+        </div>
         <div className="appointment__state--status">
-          <div className="appointment__state--status--box">
+          <div className="appointment__state--status--box" id="temporary">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -57,7 +101,7 @@ const AppointmentState = () => {
             </svg>
             <span>Reserva temporal</span>
           </div>
-          <div className="appointment__state--status--box">
+          <div className="appointment__state--status--box" id="payment">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -75,7 +119,7 @@ const AppointmentState = () => {
             </svg>
             <span>Pago realizado</span>
           </div>
-          <div className="appointment__state--status--box">
+          <div className="appointment__state--status--box" id="processing">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -94,7 +138,7 @@ const AppointmentState = () => {
             </svg>
             <span>Procesando pago</span>
           </div>
-          <div className="appointment__state--status--box">
+          <div className="appointment__state--status--box" id="complete">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -119,7 +163,7 @@ const AppointmentState = () => {
             alt="foto_carta"
           />
           <div className="appointment__state--card--info">
-            <h4>{appointment.date_time.slice(0, 10)}</h4>
+            <h4>{date}</h4>
             <div className="appoitments__state--card--info--data">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +180,7 @@ const AppointmentState = () => {
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
-              <p>{appointment.date_time.slice(12)}</p>
+              <p>{appointment.time}</p>
             </div>
             <div className="appoitments__state--card--info--data">
               <svg
@@ -162,8 +206,10 @@ const AppointmentState = () => {
           </div>
         </div>
         <div className="appointment__state--buttons">
-          <button className="appointment__state--btn">Pagar seña ${appointment.servicie.price}</button>
-          <button className="appointment__state--btn--small">Cancelar</button>
+          <button className="appointment__state--btn">
+            Pagar seña ${appointment.servicie.price}
+          </button>
+          <button className="appointment__state--btn--cancel" onClick={handleCancel}>Cancelar</button>
         </div>
       </div>
     </>

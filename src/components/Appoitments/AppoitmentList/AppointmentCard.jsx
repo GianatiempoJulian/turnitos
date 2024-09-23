@@ -1,7 +1,11 @@
+import { useState } from "react";
 import "./appoitmentList.css";
 import { Link } from 'react-router-dom';
 
-const AppointmentCard = ({ appoitment }) => {
+const AppointmentCard = ({ appoitment, btnText, btnTo} ) => {
+
+  var date = new Date(appoitment.date).toLocaleDateString('en-GB');
+
   return (
     <div className="appoitments__list--card">
       <img
@@ -9,7 +13,7 @@ const AppointmentCard = ({ appoitment }) => {
         alt="foto_carta"
       />
       <div className="appoitments__list--card--info">
-        <h2>{appoitment.date_time.slice(0, 10)}</h2>
+        <h2>{date}</h2>
         <div className="appoitments__list--card--info--data">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +30,7 @@ const AppointmentCard = ({ appoitment }) => {
             <circle cx="12" cy="12" r="10" />
             <polyline points="12 6 12 12 16 14" />
           </svg>
-          <p>{appoitment.date_time.slice(12)}</p>
+          <p>{appoitment.time}</p>
         </div>
         <div className="appoitments__list--card--info--data">
           <svg
@@ -50,7 +54,7 @@ const AppointmentCard = ({ appoitment }) => {
           <p>{appoitment.employee.name}</p>
         </div>
         <p id="estimated">precio seña ~ {appoitment.servicie.price} ARS</p>
-        <Link className="appoitments__list--card--btn" to={`/turnos/estado/${appoitment.id}`}>Reservar</Link>
+        <Link className="appoitments__list--card--btn" to={btnTo}>{btnText}</Link>
       </div>
     </div>
   );

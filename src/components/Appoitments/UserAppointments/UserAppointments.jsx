@@ -1,6 +1,6 @@
 // ======== Partials ========//
 import Logo from "../../Partials/Logo/Logo"
-import "./appoitmentList.css";
+import "../AppoitmentList/appoitmentList.css";
 
 // ======== Importaciones de React ========//
 import { useEffect, useState } from "react";
@@ -9,12 +9,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 // ======== Componentes ========//
-import FilterSlider from "./FilterSlider";
-import FilterSearch from "./FilterSearch";
-import AppointmentCard from "./AppointmentCard";
+import FilterSearch from "../AppoitmentList/FilterSearch";
+import AppointmentCard from "../AppoitmentList/AppointmentCard";
 
-
-const AppointmentList = () => {
+const UserAppointments = () => {
 
     const [appoitments, SetAppoitments] = useState([]);
 
@@ -37,12 +35,11 @@ const AppointmentList = () => {
         <>
         <div className="appoitment__list--container">
             <Logo/>
-            <h2>Hola, Cliente! 👋</h2>
-            <FilterSlider/>
+            <h2>Tus turnos</h2>
             <FilterSearch/>
             <div className="appoitments__list">
                 {appoitments.map((appoitment) => (
-                 <AppointmentCard appoitment={appoitment} btnText="Reservar" btnTo={`/turnos/${appoitment.id}/estado/`}/>
+                 <AppointmentCard appoitment={appoitment} btnText="Cancelar" btnTo={`/turnos/${appoitment.id}/estado/`}/>
                 ))}
             </div>
         </div>
@@ -50,4 +47,4 @@ const AppointmentList = () => {
     );
 }
 
-export default AppointmentList
+export default UserAppointments
