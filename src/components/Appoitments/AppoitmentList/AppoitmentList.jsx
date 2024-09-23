@@ -37,7 +37,7 @@ const AppointmentList = () => {
         <>
         <div className="appoitment__list--container">
             <Logo/>
-            <h2>Hola, Cliente! 👋</h2>
+            <h2>Hola, <a href="/perfil">Julian</a>! 👋</h2>
             <FilterSlider/>
             <FilterSearch/>
             <div className="appoitments__list">

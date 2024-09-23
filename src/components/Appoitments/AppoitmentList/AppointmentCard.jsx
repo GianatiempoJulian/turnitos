@@ -24,7 +24,6 @@ const AppointmentCard = ({ appoitment, btnText, btnTo} ) => {
     }
   }
 
-  var date = new Date(appoitment.date).toLocaleDateString('en-GB');
 
   return (
     <div className="appoitments__list--card">
@@ -33,7 +32,7 @@ const AppointmentCard = ({ appoitment, btnText, btnTo} ) => {
         alt="foto_carta"
       />
       <div className="appoitments__list--card--info">
-        <h2>{date}</h2>
+        <h2>{new Date(appoitment.date).toLocaleDateString('en-GB')}</h2>
         <div className="appoitments__list--card--info--data">
           <svg
             xmlns="http://www.w3.org/2000/svg"

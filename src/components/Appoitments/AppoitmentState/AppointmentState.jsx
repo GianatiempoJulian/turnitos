@@ -94,23 +94,22 @@ const AppointmentState = () => {
     return <div>Loading...</div>;
   }
 
-  // ======== Date en formato normal ========//
-  const date = new Date(appointment.date).toLocaleDateString("en-GB");
-
   return (
     <>
       <div>
         <Logo />
         <h3>Estado de la reserva</h3>
-        <div className="appointment__state--timer">
-          <p>Tiempo restante para pagar:</p>
-          <Countdown
-            date={Date.now() + 20000}
-            className="appointment__state--timer--countdown"
-          >
-            <p>Listo</p>
-          </Countdown>
-        </div>
+        {appointmentStatus == 2 && (
+          <div className="appointment__state--timer">
+            <p>Tiempo restante para pagar:</p>
+            <Countdown
+              date={Date.now() + 20000}
+              className="appointment__state--timer--countdown"
+            >
+              <p>Listo</p>
+            </Countdown>
+          </div>
+        )}
         <div className="appointment__state--status">
           <div className="appointment__state--status--box" id="temporary">
             <svg
@@ -194,7 +193,7 @@ const AppointmentState = () => {
             alt="foto_carta"
           />
           <div className="appointment__state--card--info">
-            <h4>{date}</h4>
+            <h4>{new Date(appointment.date).toLocaleDateString("en-GB")}</h4>
             <div className="appoitments__state--card--info--data">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -3,10 +3,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import "../public/preset.css"
 
-// ======== Componentes ========//
+// ======== Componentes [Appoitments] ========//
 import AppointmentList from './components/Appoitments/AppoitmentList/AppoitmentList';
 import AppoitmentState from './components/Appoitments/AppoitmentState/AppointmentState';
-import UserAppointments from './components/Appoitments/UserAppointments/UserAppointments';
+
+// ======== Componentes [Customers] ========//
+import CustomerProfile from './components/Customers/CustomerProfile/CustomerProfile';
+import CustomerEditProfile from './components/Customers/CustomerEditProfile/CustomerEditProfile';
 
 function App() {
 
@@ -15,7 +18,8 @@ function App() {
       <Routes>
         <Route path='/turnos' element={<AppointmentList/>}/>
         <Route path='/turnos/:id/estado/' element={<AppoitmentState/>}/>
-        <Route path='/mis-turnos' element={<UserAppointments/>}/>
+        <Route path='/perfil' element={<CustomerProfile/>}/>
+        <Route path='/perfil/editar' element={<CustomerEditProfile/>}/>
       </Routes>
     </Router>
 
