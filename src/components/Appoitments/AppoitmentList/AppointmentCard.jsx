@@ -1,8 +1,28 @@
-import { useState } from "react";
+// ======== Partials ========//
 import "./appoitmentList.css";
-import { Link } from 'react-router-dom';
+
+// ======== Importaciones de React ========//
+
+// ======== Librerias ========//
+import axios from "axios";
 
 const AppointmentCard = ({ appoitment, btnText, btnTo} ) => {
+
+  async function handleRedirect(){
+
+    const status = {
+      status_id: 2
+    };
+
+    try {
+      const response = await axios.put(`http://127.0.0.1:8000/api/appointments/${appoitment.id}`,  status)
+      if(response.status === 200){
+        window.location.href = btnTo;
+      }
+    } catch (error) {
+      console.log("Error actualizando turno", error);
+    }
+  }
 
   var date = new Date(appoitment.date).toLocaleDateString('en-GB');
 
@@ -54,7 +74,7 @@ const AppointmentCard = ({ appoitment, btnText, btnTo} ) => {
           <p>{appoitment.employee.name}</p>
         </div>
         <p id="estimated">precio seña ~ {appoitment.servicie.price} ARS</p>
-        <Link className="appoitments__list--card--btn" to={btnTo}>{btnText}</Link>
+        <button className="appoitments__list--card--btn" onClick={handleRedirect}>{btnText}</button>
       </div>
     </div>
   );

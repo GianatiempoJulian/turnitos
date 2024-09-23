@@ -8,11 +8,11 @@ import { useParams } from "react-router-dom";
 
 // ======== Librerias ========//
 import axios from "axios";
-import Countdown from 'react-countdown';
-
+import Countdown from "react-countdown";
 
 const AppointmentState = () => {
   const [appointment, setAppointment] = useState(null);
+  const [appointmentStatus, setAppointmentStatus] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
@@ -21,28 +21,17 @@ const AppointmentState = () => {
     getAppointmentById();
   }, [id]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // ======== Actualiza el estado cuando appointmentStatus cambia ========//
+  useEffect(() => {
+    const statusElements = document.getElementsByClassName(
+      "appointment__state--status--box"
+    );
 
-  // ======== Obtiene un turno mediante una ID. ========//
-  async function getAppointmentById() {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/api/appointments/${id}`
-      );
-      setAppointment(response.data.Appointment);
-      handleAppointmentStatus(response.data.Appointment.status_id)
-    } catch (error) {
-      console.log("Error obteniendo turno", error);
-    } finally {
-      setLoading(false); // Cambiamos el estado de carga cuando la solicitud termina
+    for (let i = 0; i < statusElements.length; i++) {
+      statusElements[i].classList.remove("statusStep");
     }
-  }
 
- // ======== Funcion que maneja los estados para cambiar el estilo de la status-boxes ========//
-  function handleAppointmentStatus(status){
-    switch(status){
+    switch (appointmentStatus) {
       case 2:
         document.getElementById("temporary").classList.add("statusStep");
         break;
@@ -58,16 +47,55 @@ const AppointmentState = () => {
       default:
         console.log("Error obteniendo estado del turno.");
     }
+  }, [appointmentStatus]);
+
+  // ======== Obtiene un turno mediante una ID. ========//
+  async function getAppointmentById() {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/appointments/${id}`
+      );
+      setAppointment(response.data.Appointment);
+      setAppointmentStatus(response.data.Appointment.status_id);
+    } catch (error) {
+      console.log("Error obteniendo turno", error);
+    } finally {
+      setLoading(false); // Cambiamos el estado de carga cuando la solicitud termina
+    }
+  }
+
+  // ======== Funcion que maneja el pago ========//
+  async function handlePayment() {
+    const status = {
+      status_id: 3,
+    };
+    try {
+      const response = await axios.put(
+        `http://127.0.0.1:8000/api/appointments/${id}`,
+        status
+      );
+      if (response.status === 200) {
+        setAppointmentStatus(response.data.Appointment.status_id);
+        // Llama nuevamente a getAppointmentById para refrescar el estado
+        getAppointmentById();
+      }
+    } catch (error) {
+      console.log("Error actualizando turno", error);
+    }
   }
 
   // ======== Funcion que maneja el cancelamiento del pago ========//
-  function handleCancel(){
-    window.location.href = 'http://localhost:5173/turnos';
+  function handleCancel() {
+    window.location.href = "http://localhost:5173/turnos";
+  }
+
+  // ======== Loading ========//
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   // ======== Date en formato normal ========//
-  const date = new Date(appointment.date).toLocaleDateString('en-GB');
-
+  const date = new Date(appointment.date).toLocaleDateString("en-GB");
 
   return (
     <>
@@ -75,8 +103,11 @@ const AppointmentState = () => {
         <Logo />
         <h3>Estado de la reserva</h3>
         <div className="appointment__state--timer">
-           <p>Tiempo restante para pagar:</p>
-          <Countdown date={Date.now() + 20000} className="appointment__state--timer--countdown">
+          <p>Tiempo restante para pagar:</p>
+          <Countdown
+            date={Date.now() + 20000}
+            className="appointment__state--timer--countdown"
+          >
             <p>Listo</p>
           </Countdown>
         </div>
@@ -206,10 +237,17 @@ const AppointmentState = () => {
           </div>
         </div>
         <div className="appointment__state--buttons">
-          <button className="appointment__state--btn">
-            Pagar seña ${appointment.servicie.price}
+          {appointmentStatus == 2 && (
+            <button className="appointment__state--btn" onClick={handlePayment}>
+              Pagar seña ${appointment.servicie.price}
+            </button>
+          )}
+          <button
+            className="appointment__state--btn--cancel"
+            onClick={handleCancel}
+          >
+            Cancelar
           </button>
-          <button className="appointment__state--btn--cancel" onClick={handleCancel}>Cancelar</button>
         </div>
       </div>
     </>
