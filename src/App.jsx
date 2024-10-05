@@ -4,8 +4,8 @@ import React from 'react';
 import "../public/preset.css"
 
 // ======== Componentes [Appoitments] ========//
-import AppointmentList from './components/Appoitments/AppoitmentList/AppoitmentList';
-import AppoitmentState from './components/Appoitments/AppoitmentState/AppointmentState';
+import AppointmentList from './components/Appoitments/AppointmentList/AppointmentList';
+import AppointmentState from './components/Appoitments/AppointmentState/AppointmentState';
 
 // ======== Componentes [Customers] ========//
 import CustomerProfile from './components/Customers/CustomerProfile/CustomerProfile';
@@ -17,7 +17,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/turnos' element={<AppointmentList/>}/>
-        <Route path='/turnos/:id/estado/' element={<AppoitmentState/>}/>
+        <Route path='/turnos/:id/estado/' element={<AppointmentState/>}/>
         <Route path='/perfil' element={<CustomerProfile/>}/>
         <Route path='/perfil/editar' element={<CustomerEditProfile/>}/>
       </Routes>

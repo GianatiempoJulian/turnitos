@@ -25,7 +25,7 @@
     display: flex;
     padding: 10px;
     margin-top: 10px;
-    gap: 20px;
+    gap: 13px;
 }
 
 .filter__search--date{
@@ -34,24 +34,24 @@
     border-width: 1px;
     border-radius: 10px;
     padding: 5px;
-    min-width: 200px;
+    min-width: 170px;
 }
 
 .filter__search--btn{
     border-style: none;
     border-radius: 10px;
-    padding: 8px;
+    padding: 4px;
     background-color: gray;
     color: white;
-    min-width: 80px;
+    min-width: 65px;
 }
 
-.appoitments__list{
+.appointments__list{
     display: flex;
     flex-direction: column;
 }
 
-.appoitments__list--card{
+.appointments__list--card{
     display: grid;
     grid-template-columns: 40% 60%;
     align-items: center;
@@ -63,21 +63,21 @@
     height: 250px
 }
 
-.appoitments__list--card img{
+.appointments__list--card img{
     width: 120px;
     height: 120px;
 }
 
-.appoitments__list--card--info{
+.appointments__list--card--info{
    text-align: center;
 }
 
-.appoitments__list--card--info h2{
+.appointments__list--card--info h2{
     font-size: 30px;
     margin-bottom: 0px;
 }
 
-.appoitments__list--card--info--data{
+.appointments__list--card--info--data{
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -92,7 +92,7 @@
     margin-bottom: 30px;
 }
 
-.appoitments__list--card--btn{
+.appointments__list--card--btn{
     border-style: none;
     border-radius: 10px;
     padding: 10px;
@@ -103,6 +103,6 @@
     text-decoration: none;
 }
 
-.appoitments__list--card--btn:hover, button:hover{
+.appointments__list--card--btn:hover, button:hover{
     background-color: rgb(70, 70, 70);
 }

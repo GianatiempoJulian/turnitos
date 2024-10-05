@@ -1,6 +1,6 @@
 // ======== Partials ========//
 import Logo from "../../Partials/Logo/Logo";
-import "../../Appoitments/AppoitmentList/appoitmentList.css";
+import "../../Appoitments/AppointmentList/appointmentList.css";
 import "./customerProfile.css";
 
 // ======== Importaciones de React ========//
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 
 // ======== Componentes ========//
-import FilterSearch from "../../Appoitments/AppoitmentList/FilterSearch";
+import FilterSearch from "../../Appoitments/AppointmentList/FilterSearch";
 
 const CustomerProfile = () => {
   const [appoitments, SetAppoitments] = useState([]);

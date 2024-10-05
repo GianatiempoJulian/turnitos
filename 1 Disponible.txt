@@ -1,0 +1,16 @@
+1: Disponible
+	Para pasar a temporal deben tocar "reservar" en la lista de turnos.
+2: Temporal
+	Para pasar a pago_Realizado deben pagar la seña en la pantalla de pago.
+3: pago_realizado
+	Para pasar a procesando_pago el pago tiene que haber entrado y haber sido verificado. (Una vez que se esta en este estado, eliminar timer)
+4: procesando_pago
+	Para pasar a completada, el "admin" debe verificar y marcar que el pago llego.
+5: Completada
+	Para pasar de completa a eliminado, hay que hacer una función que elimine turnos de días que ya pasaron.
+
+
+Flujo:
+
+Ingresa sus datos > muestra turnos > reserva > concreta pago > muestra sus turnos
+
