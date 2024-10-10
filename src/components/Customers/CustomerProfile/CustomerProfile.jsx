@@ -14,7 +14,7 @@ import axios from "axios";
 import FilterSearch from "../../Appoitments/AppointmentList/FilterSearch";
 
 const CustomerProfile = () => {
-  const [appoitments, SetAppoitments] = useState([]);
+  const [appointment, setAppointment] = useState([]);
   const [customer, setCustomer] = useState([]);
 
   async function getCustomer(){
@@ -32,7 +32,7 @@ const CustomerProfile = () => {
     await axios
       .get("http://127.0.0.1:8000/api/appointments")
       .then((response) => {
-        SetAppoitments(response.data);
+        setAppointment(response.data);
         console.log(response.data);
       })
       .catch((error) => {
@@ -64,7 +64,7 @@ const CustomerProfile = () => {
 
   return (
     <>
-      <div className="appoitment__list--container">
+      <div className="appointments__list--container">
         <Logo />
         <h2>Tus datos</h2>
         <div className="customer__profile">
@@ -87,16 +87,16 @@ const CustomerProfile = () => {
         <hr className="customer__profile--divisor"/>
         <h2>Tus turnos</h2>
         <FilterSearch />
-        <div className="appoitments__list">
-          {appoitments.map((appoitment) => (
-            <div className="appoitments__list--card">
+        <div className="appointments__list">
+          {appointment.map((appoitment) => (
+            <div className="appointments__list--card">
               <img
                 src="https://images.pexels.com/photos/939835/pexels-photo-939835.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="foto_carta"
               />
-              <div className="appoitments__list--card--info">
+              <div className="appointments__list--card--info">
                 <h2>{new Date(appoitment.date).toLocaleDateString("en-GB")}</h2>
-                <div className="appoitments__list--card--info--data">
+                <div className="appointments__list--card--info--data">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -114,7 +114,7 @@ const CustomerProfile = () => {
                   </svg>
                   <p>{appoitment.time}</p>
                 </div>
-                <div className="appoitments__list--card--info--data">
+                <div className="appointments__list--card--info--data">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -139,7 +139,7 @@ const CustomerProfile = () => {
                   precio seña ~ {appoitment.servicie.price} ARS
                 </p>
                 <button
-                  className="appoitments__list--card--btn"
+                  className="appointments__list--card--btn"
                   onClick={() => handleCancel(appoitment.id)}
                 >
                   Cancelar

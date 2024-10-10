@@ -85,7 +85,18 @@ const AppointmentState = () => {
   }
 
   // ======== Funcion que maneja el cancelamiento del pago ========//
-  function handleCancel() {
+  async function handleCancel() {
+    const status = {
+      status_id: 2,
+    };
+    try {
+      const response = await axios.put(
+        `http://127.0.0.1:8000/api/appointments/${id}`,
+        status
+      );
+    } catch (error) {
+      console.log("Error actualizando turno", error);
+    }
     window.location.href = "http://localhost:5173/turnos";
   }
 
@@ -93,6 +104,7 @@ const AppointmentState = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+
 
   return (
     <>

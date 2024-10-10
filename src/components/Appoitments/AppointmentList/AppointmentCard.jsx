@@ -20,7 +20,7 @@ const AppointmentCard = ({ appointment, btnText, btnTo} ) => {
         window.location.href = btnTo;
       }
     } catch (error) {
-      console.log("Error actualizando turno", error);
+      console.log("Error obteniendo turno", error);
     }
   }
 
