@@ -34,6 +34,8 @@ const FilterSlider = () => {
             <button className="filter__slider--btn">Cejas</button>
             <button className="filter__slider--btn">Pestañas</button>
             <button className="filter__slider--btn">ETC</button>
+            <button className="filter__slider--btn">ETC</button>
+            <button className="filter__slider--btn">ETC</button>
         </Carousel>
     );
 }

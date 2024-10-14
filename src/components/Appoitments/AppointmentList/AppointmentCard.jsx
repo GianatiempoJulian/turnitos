@@ -6,17 +6,19 @@ import "./appointmentList.css";
 // ======== Librerias ========//
 import axios from "axios";
 
-const AppointmentCard = ({ appointment, btnText, btnTo} ) => {
+const AppointmentCard = ({ appointment, btnText, btnTo }) => {
 
-  async function handleRedirect(){
-
+  async function handleRedirect() {
     const status = {
-      status_id: 2
+      status_id: 2,
     };
 
     try {
-      const response = await axios.put(`http://127.0.0.1:8000/api/appointments/${appointment.id}`,  status)
-      if(response.status === 200){
+      const response = await axios.put(
+        `http://127.0.0.1:8000/api/appointments/${appointment.id}`,
+        status
+      );
+      if (response.status === 200) {
         window.location.href = btnTo;
       }
     } catch (error) {
@@ -24,15 +26,17 @@ const AppointmentCard = ({ appointment, btnText, btnTo} ) => {
     }
   }
 
+  function formatDate(date){
+    const dateParts = date.split("-"); // Divide el string en año, mes y día
+    const correctDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]); // Meses en JavaScript son base 0
+    return correctDate.toLocaleDateString("es-ES");
+  }
 
+  console.log(appointment);
   return (
     <div className="appointments__list--card">
-      <img
-        src="https://images.pexels.com/photos/939835/pexels-photo-939835.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        alt="foto_carta"
-      />
       <div className="appointments__list--card--info">
-        <h2>{new Date(appointment.date).toLocaleDateString('en-GB')}</h2>
+        <h2>{formatDate(appointment.date)}</h2>
         <div className="appointments__list--card--info--data">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -62,6 +66,23 @@ const AppointmentCard = ({ appointment, btnText, btnTo} ) => {
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
+            class="lucide lucide-sparkle"
+          >
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+          </svg>
+          <p>{appointment.servicie.type_servicie.name}</p>
+        </div>
+        <div className="appointments__list--card--info--data">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
             class="lucide lucide-contact"
           >
             <path d="M16 2v2" />
@@ -73,7 +94,12 @@ const AppointmentCard = ({ appointment, btnText, btnTo} ) => {
           <p>{appointment.employee.name}</p>
         </div>
         <p id="estimated">precio seña ~ {appointment.servicie.price} ARS</p>
-        <button className="appointments__list--card--btn" onClick={handleRedirect}>{btnText}</button>
+        <button
+          className="appointments__list--card--btn"
+          onClick={handleRedirect}
+        >
+          {btnText}
+        </button>
       </div>
     </div>
   );

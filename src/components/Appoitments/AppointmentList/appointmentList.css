@@ -48,25 +48,22 @@
 
 .appointments__list{
     display: flex;
+    align-items: center;
     flex-direction: column;
 }
 
 .appointments__list--card{
     display: grid;
-    grid-template-columns: 40% 60%;
     align-items: center;
     justify-items: center;
     margin-top: 20px;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     border-radius: 10px;
     padding: 10px;
-    height: 250px
+    height: 260px;
+    width: 200px;
 }
 
-.appointments__list--card img{
-    width: 120px;
-    height: 120px;
-}
 
 .appointments__list--card--info{
    text-align: center;
@@ -74,7 +71,7 @@
 
 .appointments__list--card--info h2{
     font-size: 30px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 
 .appointments__list--card--info--data{
@@ -89,7 +86,6 @@
     color: gray;
     font-size: 12px;
     margin-top: 10px;
-    margin-bottom: 30px;
 }
 
 .appointments__list--card--btn{
@@ -105,4 +101,8 @@
 
 .appointments__list--card--btn:hover, button:hover{
     background-color: rgb(70, 70, 70);
+}
+
+.react-multi-carousel-track li {
+    width: 110px !important;
 }
