@@ -5,7 +5,7 @@ import "./customerProfile.css";
 
 // ======== Importaciones de React ========//
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // ======== Librerias ========//
 import axios from "axios";
@@ -17,7 +17,7 @@ const CustomerProfile = () => {
   const [appointment, setAppointment] = useState([]);
   const [customer, setCustomer] = useState([]);
 
-  async function getCustomer(){
+  async function getCustomer() {
     await axios
       .get(`http://127.0.0.1:8000/api/customers/1`)
       .then((response) => {
@@ -62,6 +62,12 @@ const CustomerProfile = () => {
     }
   }
 
+  function formatDate(date){
+    const dateParts = date.split("-"); // Divide el string en año, mes y día
+    const correctDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]); // Meses en JavaScript son base 0
+    return correctDate.toLocaleDateString("es-ES");
+  }
+
   return (
     <>
       <div className="appointments__list--container">
@@ -71,7 +77,9 @@ const CustomerProfile = () => {
           <ul className="customer__profile--info">
             <li>
               <h4>Nombre completo: </h4>
-              <span>{customer.name} {customer.lastname}</span>
+              <span>
+                {customer.name} {customer.lastname}
+              </span>
             </li>
             <li>
               <h4>Telefono: </h4>
@@ -82,20 +90,18 @@ const CustomerProfile = () => {
               <span>{customer.email}</span>
             </li>
           </ul>
-          <Link className="customer__profile--btn" to={`/perfil/editar`}>Editar datos</Link>
+          <Link className="customer__profile--btn" to={`/perfil/editar`}>
+            Editar datos
+          </Link>
         </div>
-        <hr className="customer__profile--divisor"/>
+        <hr className="customer__profile--divisor" />
         <h2>Tus turnos</h2>
         <FilterSearch />
         <div className="appointments__list">
-          {appointment.map((appoitment) => (
+          {appointment.map((appointment) => (
             <div className="appointments__list--card">
-              <img
-                src="https://images.pexels.com/photos/939835/pexels-photo-939835.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="foto_carta"
-              />
               <div className="appointments__list--card--info">
-                <h2>{new Date(appoitment.date).toLocaleDateString("en-GB")}</h2>
+                <h2>{formatDate(appointment.date)}</h2>
                 <div className="appointments__list--card--info--data">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +118,24 @@ const CustomerProfile = () => {
                     <circle cx="12" cy="12" r="10" />
                     <polyline points="12 6 12 12 16 14" />
                   </svg>
-                  <p>{appoitment.time}</p>
+                  <p>{appointment.time}</p>
+                </div>
+                <div className="appointments__list--card--info--data">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-sparkle"
+                  >
+                    <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+                  </svg>
+                  <p>{appointment.servicie.type_servicie.name}</p>
                 </div>
                 <div className="appointments__list--card--info--data">
                   <svg
@@ -133,16 +156,16 @@ const CustomerProfile = () => {
                     <circle cx="12" cy="11" r="3" />
                     <rect x="3" y="4" width="18" height="18" rx="2" />
                   </svg>
-                  <p>{appoitment.employee.name}</p>
+                  <p>{appointment.employee.name}</p>
                 </div>
                 <p id="estimated">
-                  precio seña ~ {appoitment.servicie.price} ARS
+                  precio seña ~ {appointment.servicie.price} ARS
                 </p>
                 <button
                   className="appointments__list--card--btn"
-                  onClick={() => handleCancel(appoitment.id)}
+                  onClick={handleCancel(appointment.id)}
                 >
-                  Cancelar
+                  Cancelar turno
                 </button>
               </div>
             </div>

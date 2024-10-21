@@ -28,13 +28,17 @@
     gap: 13px;
 }
 
-.filter__search--date{
+.filter__search--date, .filter__search--employee{
     border-style: solid;
     border-color: gray;
     border-width: 1px;
     border-radius: 10px;
     padding: 5px;
     min-width: 170px;
+}
+
+.filter__search--employee{
+    min-width: 182px;
 }
 
 .filter__search--btn{
@@ -60,8 +64,8 @@
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     border-radius: 10px;
     padding: 10px;
-    height: 260px;
-    width: 200px;
+    height: 350px;
+    width: 250px;
 }
 
 

@@ -87,8 +87,9 @@ const AppointmentState = () => {
   // ======== Funcion que maneja el cancelamiento del pago ========//
   async function handleCancel() {
     const status = {
-      status_id: 2,
+      status_id: 1,
     };
+
     try {
       const response = await axios.put(
         `http://127.0.0.1:8000/api/appointments/${id}`,
@@ -104,7 +105,6 @@ const AppointmentState = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
 
   return (
     <>
@@ -200,10 +200,6 @@ const AppointmentState = () => {
           </div>
         </div>
         <div className="appointment__state--card">
-          <img
-            src="https://images.pexels.com/photos/939835/pexels-photo-939835.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt="foto_carta"
-          />
           <div className="appointment__state--card--info">
             <h4>{new Date(appointment.date).toLocaleDateString("en-GB")}</h4>
             <div className="appoitments__state--card--info--data">
@@ -223,6 +219,23 @@ const AppointmentState = () => {
                 <polyline points="12 6 12 12 16 14" />
               </svg>
               <p>{appointment.time}</p>
+            </div>
+            <div className="appointments__list--card--info--data">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-sparkle"
+              >
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+              </svg>
+              <p>{appointment.servicie.type_servicie.name}</p>
             </div>
             <div className="appoitments__state--card--info--data">
               <svg

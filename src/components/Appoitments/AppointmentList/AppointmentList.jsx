@@ -11,18 +11,21 @@ import axios from "axios";
 // ======== Componentes ========//
 import FilterSlider from "./FilterSlider";
 import FilterSearch from "./FilterSearch";
+import FilterEmployee from "./FilterEmployee";
 import AppointmentCard from "./AppointmentCard";
 
 const AppointmentList = () => {
-  const [appointments, Setappointments] = useState([]);
+  const [appointments, setAppointments] = useState([]);
   const [filterDate, setFilterDate] = useState("");
+  const [filterTypeServicie, setFilterTypeServicie] = useState("");
+  const [filterEmployee, setFilterEmployee] = useState("");
 
   async function getAllAppointments() {
     await axios
       .get("http://127.0.0.1:8000/api/appointments")
       .then((response) => {
-        Setappointments(response.data);
-        console.log(response.data);
+        setAppointments(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         console.log("Error obteniendo turnos", error);
@@ -33,9 +36,12 @@ const AppointmentList = () => {
     getAllAppointments();
   }, []);
 
-  const filteredAppointments = filterDate
-    ? appointments.filter((appointment) => appointment.date === filterDate)
-    : appointments;
+  const filteredAppointments = appointments.filter((appointment) => {
+    const matchesDate = filterDate ? appointment.date === filterDate : true;
+    const matchesTypeService = filterTypeServicie ? appointment.servicie.type_servicie.name === filterTypeServicie : true;
+    const matchesEmployee = filterEmployee ? appointment.employee.name === filterEmployee : true;
+    return matchesDate && matchesTypeService && matchesEmployee;
+  });
 
   return (
     <>
@@ -44,8 +50,9 @@ const AppointmentList = () => {
         <h2>
           Hola, <a href="/perfil">Julian</a>! 👋
         </h2>
-        <FilterSlider />
+        <FilterSlider setFilterTypeServicie={setFilterTypeServicie}/>
         <FilterSearch setFilterDate={setFilterDate} />
+        <FilterEmployee setFilterEmployee={setFilterEmployee} />
         <div className="appointments__list">
           {filteredAppointments.map((appointment) => (
             <AppointmentCard

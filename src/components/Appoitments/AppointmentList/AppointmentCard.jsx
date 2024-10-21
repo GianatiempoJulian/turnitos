@@ -37,6 +37,7 @@ const AppointmentCard = ({ appointment, btnText, btnTo }) => {
     <div className="appointments__list--card">
       <div className="appointments__list--card--info">
         <h2>{formatDate(appointment.date)}</h2>
+        <h3>{appointment.servicie.name}</h3>
         <div className="appointments__list--card--info--data">
           <svg
             xmlns="http://www.w3.org/2000/svg"
