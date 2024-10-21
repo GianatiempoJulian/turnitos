@@ -12,6 +12,12 @@
     padding: 0px;
 }
 
+.customer__logo{
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
 .customer__profile--info li{
     display: flex;
     flex-direction: row;

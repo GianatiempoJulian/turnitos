@@ -1,5 +1,6 @@
 // ======== Partials ========//
 import Logo from "../../Partials/Logo/Logo";
+import Backward from "../../Partials/Backward/Backward";
 import "../../Appoitments/AppointmentList/appointmentList.css";
 import "./customerProfile.css";
 
@@ -62,7 +63,7 @@ const CustomerProfile = () => {
     }
   }
 
-  function formatDate(date){
+  function formatDate(date) {
     const dateParts = date.split("-"); // Divide el string en año, mes y día
     const correctDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]); // Meses en JavaScript son base 0
     return correctDate.toLocaleDateString("es-ES");
@@ -71,7 +72,10 @@ const CustomerProfile = () => {
   return (
     <>
       <div className="appointments__list--container">
-        <Logo />
+        <div className="backward__logo">
+          <Backward />
+          <Logo />
+        </div>
         <h2>Tus datos</h2>
         <div className="customer__profile">
           <ul className="customer__profile--info">

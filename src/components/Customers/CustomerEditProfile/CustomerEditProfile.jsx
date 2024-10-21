@@ -1,5 +1,6 @@
 // ======== Partials ========//
 import Logo from "../../Partials/Logo/Logo";
+import Backward from "../../Partials/Backward/Backward"
 import "./customerEditProfile.css";
 
 // ======== Importaciones de React ========//
@@ -64,7 +65,10 @@ const CustomerEditProfile = () => {
   return (
     <>
       <div className="customer__edit">
-        <Logo />
+        <div className="backward__logo">
+          <Backward/>
+          <Logo />
+        </div>
         <h2>Editar datos</h2>
         {successMessage && (
           <div className="success-message">{successMessage}</div>

@@ -139,3 +139,8 @@
     color: brown;
 }
 
+.timeout__message{
+    color: red;
+    margin-bottom: 10px;
+    font-size: 15px;
+}

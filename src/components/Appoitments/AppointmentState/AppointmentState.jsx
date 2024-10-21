@@ -1,10 +1,11 @@
 // ======== Partials ========//
 import Logo from "../../Partials/Logo/Logo";
+import Backward from "../../Partials/Backward/Backward";
 import "./appointmentState.css";
 
 // ======== Importaciones de React ========//
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 // ======== Librerias ========//
 import axios from "axios";
@@ -14,7 +15,20 @@ const AppointmentState = () => {
   const [appointment, setAppointment] = useState(null);
   const [appointmentStatus, setAppointmentStatus] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [timeOutMessage, setTimeOutMessage] = useState(true);
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  // ======== Para menejar las funciones que controlan el abandono de la pagina ========//
+  useEffect(() => {
+    // Añadir el listener para beforeunload al montar el componente
+    window.addEventListener("beforeunload", handleUnload);
+
+    // Quitar el listener cuando el componente se desmonte
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+    };
+  }, []);
 
   // ======== Setea el turno llamando a la función. ========//
   useEffect(() => {
@@ -84,6 +98,38 @@ const AppointmentState = () => {
     }
   }
 
+  // ======== Funcion que maneja lo que pasa cuando el reloj llega a 0 ========//
+  async function handleTimeExpired() {
+    const status = {
+      status_id: 1,
+    };
+    try {
+      const response = await axios.put(
+        `http://127.0.0.1:8000/api/appointments/${id}`,
+        status
+      );
+      if (response.status === 200) {
+        setAppointmentStatus(response.data.Appointment.status_id);
+        // Llama nuevamente a getAppointmentById para refrescar el estado
+        getAppointmentById();
+        setTimeOutMessage("Tiempo de reserva expirado. Volviendo atrás.");
+        setTimeout(() => {
+          setTimeOutMessage("");
+          navigate(-1);
+        }, 4000);
+      }
+    } catch (error) {
+      console.log("Error actualizando turno", error);
+    }
+  }
+
+  // ======== Funcion que maneja el estado del turno si abandonan la pagina ========//
+  const handleUnload = async (event) => {
+    event.preventDefault();
+    // Aquí puedes llamar a handleTimeExpired o actualizar el turno de alguna forma
+    await handleTimeExpired();
+  };
+
   // ======== Funcion que maneja el cancelamiento del pago ========//
   async function handleCancel() {
     const status = {
@@ -109,18 +155,23 @@ const AppointmentState = () => {
   return (
     <>
       <div>
-        <Logo />
+        <div className="backward__logo">
+          <Backward />
+          <Logo />
+        </div>
         <h3>Estado de la reserva</h3>
         {appointmentStatus == 2 && (
           <div className="appointment__state--timer">
             <p>Tiempo restante para pagar:</p>
             <Countdown
-              date={Date.now() + 20000}
+              date={Date.now() + 10000}
               className="appointment__state--timer--countdown"
-            >
-              <p>Listo</p>
-            </Countdown>
+              onComplete={handleTimeExpired}
+            ></Countdown>
           </div>
+        )}
+        {timeOutMessage && (
+          <div className="timeout__message">{timeOutMessage}</div>
         )}
         <div className="appointment__state--status">
           <div className="appointment__state--status--box" id="temporary">
