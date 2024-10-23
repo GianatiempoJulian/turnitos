@@ -22,10 +22,9 @@ const AppointmentList = () => {
 
   async function getAllAppointments() {
     await axios
-      .get("http://127.0.0.1:8000/api/appointments")
+      .get("http://127.0.0.1:8000/api/appointments/availables")
       .then((response) => {
         setAppointments(response.data);
-        console.log(response.data)
       })
       .catch((error) => {
         console.log("Error obteniendo turnos", error);
