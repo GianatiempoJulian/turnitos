@@ -132,14 +132,15 @@ const AppointmentState = () => {
 
   // ======== Funcion que maneja el cancelamiento del pago ========//
   async function handleCancel() {
-    const status = {
-      status_id: 1,
+    const changes = {
+      customer_id: null,
+      status_id: 1
     };
 
     try {
       const response = await axios.put(
         `http://127.0.0.1:8000/api/appointments/${id}`,
-        status
+        changes
       );
     } catch (error) {
       console.log("Error actualizando turno", error);

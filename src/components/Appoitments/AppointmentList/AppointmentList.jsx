@@ -24,7 +24,7 @@ const AppointmentList = () => {
     await axios
       .get("http://127.0.0.1:8000/api/appointments/availables")
       .then((response) => {
-        setAppointments(response.data);
+        setAppointments(response.data.available);
       })
       .catch((error) => {
         console.log("Error obteniendo turnos", error);
